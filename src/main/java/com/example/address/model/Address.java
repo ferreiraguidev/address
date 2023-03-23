@@ -26,6 +26,10 @@ public class Address {
     private String street;
     private String city;
 
+    private String uf;
+    private String ibge;
+    private String bairro;
+
     @NotNull(message = "Pessoa é obrigatória para salvar um endereço")
     private Long personId;
 

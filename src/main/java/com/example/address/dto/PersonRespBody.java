@@ -16,4 +16,8 @@ public class PersonRespBody {
     private String rg;
     private String email;
 
+    private String uf;
+    private String ibge;
+    private String bairro;
+
 }

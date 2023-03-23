@@ -3,8 +3,8 @@ package com.example.address.gateway;
 
 import com.example.address.client.AddressRepository;
 import com.example.address.client.PersonClient;
-import com.example.address.client.ViaCepClient;
 import com.example.address.dto.AddressPostReqBody;
+import com.example.address.handler.PessoaInexistenteException;
 import com.example.address.model.Address;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,7 @@ public class AddressGateway {
     private final CepGateway cepGateway;
 
     private final PersonClient personClient;
+
     public Address save(final AddressPostReqBody addressPostReqBody) throws Exception {
         try {
             var viaCep = cepGateway.getCep(addressPostReqBody.getCep());
@@ -28,13 +29,16 @@ public class AddressGateway {
                         .cep(addressPostReqBody.getCep())
                         .city(viaCep.getLocalidade())
                         .street(viaCep.getLogradouro())
+                        .uf(viaCep.getUf())
+                        .ibge(viaCep.getIbge())
+                        .bairro(viaCep.getBairro())
                         .personId(addressPostReqBody.getPersonId())
                         .build();
                 return addressRepository.save(address);
             }
 
         } catch (Exception ex) {
-            throw new Exception(ex.getCause().getMessage());
+            throw new PessoaInexistenteException("Impossível salvar endereço sem relaciona-lo com uma pessoa!");
         }
         return null;
     }

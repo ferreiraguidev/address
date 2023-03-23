@@ -13,4 +13,5 @@ public class ViaCep {
     private String localidade;
     private String uf;
     private String logradouro;
+    private String ibge;
 }
