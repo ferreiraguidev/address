@@ -25,7 +25,7 @@ public class AddressGateway {
             var viaCep = cepGateway.getCep(addressPostReqBody.getCep());
             personClient.findByPersonId(addressPostReqBody.getPersonId());
             if (viaCep.getCep() != null) {
-                var address = Address.builder()
+                final var address = Address.builder()
                         .cep(addressPostReqBody.getCep())
                         .city(viaCep.getLocalidade())
                         .street(viaCep.getLogradouro())
